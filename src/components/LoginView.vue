@@ -1,36 +1,14 @@
-<!-- <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'LoginView',
-  props: {
-    msg: {
-      type: String,
-      default: 'Login'
-    }
-  }
-})
-</script>
-
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style> -->
+<template>                                                                                   
+    <div class="container mt-5">                                                               
+      <div class="card">                                                                       
+        <div class="card-header">Login</div>                                                   
+        <div class="card-body">                                                                
+          <p>Login functionality coming soon...</p>                                            
+        </div>                                                                                 
+      </div>                                                                                   
+    </div>                                                                                     
+  </template>                                                                                  
+                                                                                               
+  <script setup lang="ts">                                                                     
+  // Login component - placeholder                                                             
+  </script>       

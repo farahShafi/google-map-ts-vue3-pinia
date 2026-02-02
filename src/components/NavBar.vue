@@ -1,43 +1,72 @@
-<template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand :to="{ name: 'Map' }">HOME</b-navbar-brand>
+<template>                                                                                   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">                                  
+      <div class="container-fluid">                                                            
+        <router-link class="navbar-brand" :to="{ name: 'Map' }">HOME</router-link>             
+                                                                                               
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"                 
+  data-bs-target="#navbarNav">                                                                 
+          <span class="navbar-toggler-icon"></span>                                            
+        </button>                                                                              
+                                                                                               
+        <div class="collapse navbar-collapse" id="navbarNav">                                  
+          <ul class="navbar-nav ms-auto">                                                      
+            <!-- When logged in: show dropdown -->                                             
+            <li v-if="store.loggedIn" class="nav-item dropdown">                               
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">          
+                <em>User</em>                                                                  
+              </a>                                                                             
+              <ul class="dropdown-menu">                                                       
+                <li><router-link class="dropdown-item" :to="{ name: 'NewProperty' }">Add       
+  Property</router-link></li>                                                                  
+                <li><a class="dropdown-item" href="#" @click="signOut">Sign Out</a></li>       
+              </ul>                                                                            
+            </li>                                                                              
+                                                                                               
+            <!-- When logged out: show sign in button -->                                      
+            <li v-else class="nav-item">                                                       
+              <button class="btn btn-outline-info" @click="signIn">Sign In</button>            
+            </li>                                                                              
+          </ul>                                                                                
+        </div>                                                                                 
+      </div>                                                                                   
+    </nav>                                                                                     
+  </template>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown v-if="loggedIn" right>
-            <template #button-content><em>User</em></template>
-            <b-dropdown-item :to="{ name: 'NewProperty' }">Add Property</b-dropdown-item>
-            <b-dropdown-item :to="{ name: 'Map' }" @click="signOut">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item v-else :to="{ name: 'NewProperty' }" @click="signIn">
-            <b-button variant="outline-info">Sign In</b-button>
-          </b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-  </div>
-</template>
+<script setup lang="ts">
+// New Composition API with <script setup> 
+// import Vue from 'vue'
+ import { useRouter } from 'vue-router'
+ import { useLoggedInStore } from '@/stores/loggedIn'
 
-<script lang="ts">
-import Vue from 'vue'
-import { mapGetters, mapActions } from 'vuex'
+const router = useRouter()
+const store = useLoggedInStore()
 
-export default Vue.extend({
-  name: 'NavBar',
-  computed: {
-    ...mapGetters('loggedIn', ['loggedIn'])
-  },
-  methods: {
-    ...mapActions('loggedIn', ['setLoggedIn']),
-    signIn(): void {
-      this.setLoggedIn(true)
-    },
-    signOut(): void {
-      this.setLoggedIn(false)
-    }
+const signIn = () => {                                                                       
+    store.setLoggedIn(true)                                           
+    router.push({ name: 'NewProperty' })  // Add navigation!                                                                    
+  }                                                                                            
+                                                                                               
+  const signOut = () => {                                                                      
+    store.setLoggedIn(false)                                                                   
   }
-})
+  
+// export default Vue.extend({
+//   name: 'NavBar',
+//   computed: {
+//     // ...mapGetters('loggedIn', ['loggedIn'])
+    
+//   },
+//   methods: {
+//     ...mapActions('loggedIn', ['setLoggedIn']),
+//     signIn(): void {
+//       // this.setLoggedIn(true)
+//       store.setLoggedIn(true)
+//     },
+//     signOut(): void {
+//       // this.setLoggedIn(false)
+//       store.setLoggedIn(false)
+//     }
+//   }
+// })
 </script>
