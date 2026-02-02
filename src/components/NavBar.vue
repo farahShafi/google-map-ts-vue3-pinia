@@ -50,23 +50,4 @@ const signIn = () => {
   const signOut = () => {                                                                      
     store.setLoggedIn(false)                                                                   
   }
-  
-// export default Vue.extend({
-//   name: 'NavBar',
-//   computed: {
-//     // ...mapGetters('loggedIn', ['loggedIn'])
-    
-//   },
-//   methods: {
-//     ...mapActions('loggedIn', ['setLoggedIn']),
-//     signIn(): void {
-//       // this.setLoggedIn(true)
-//       store.setLoggedIn(true)
-//     },
-//     signOut(): void {
-//       // this.setLoggedIn(false)
-//       store.setLoggedIn(false)
-//     }
-//   }
-// })
 </script>
