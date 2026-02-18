@@ -1,34 +1,43 @@
 import { defineStore } from 'pinia'
 import { Property } from '@/types' 
+import { getLocations, createLocation } from '@/services/locations' 
 
 export const usePropertiesStore = defineStore('properties', {                     
     state: () => ({                                                          
-      properties: [
-        {
-        formatted_address: '412 West 9000 South, Sandy, UT 84070\nSandy Sandy Utah United States',
-        full_name: 'Timcoat Tim',
-        price: '350k',
-        description: 'Single Home, Built in 1998',
-        lat: '40.5886089',
-        lng: '-111.9034992'
-        },
-        {
-        formatted_address: 'South Salt Lake, UT 84115\nSouth Salt Lake South Salt Lake, Salt Lake City Utah United States',
-        full_name: 'Chris Hornok',
-        price: '470k',
-        description: 'Twin home, Built in 2010',
-        lat: '40.6973223',
-        lng: '-111.8784961'
-        }
-        ] as Property[]                                      
+      properties: [] as Property[],  
+      loading: false,
+      error: null as string | null                                    
     }),                                                                      
                                                                              
     getters: {                                                               
       allProperties: (state): Property[] => state.properties                                     
     },                                                                       
                                                                              
-    actions: {     
-      addProperty(property: Property): void {                                
+    actions: {  
+      async fetchProperties() {
+        this.loading = true
+        this.error = null
+        try {
+          const data = await getLocations()
+          this.properties = data
+        } catch(error: any) {
+          this.error = error.message || 'Failed to load properties'
+        } finally {
+          this.loading = false
+        }
+        
+      },   
+      async addProperty(property: Property) {   
+        this.loading = true
+        this.error = null
+        try {
+          const newProperty = await createLocation(property)
+          this.properties.unshift(newProperty)
+        } catch(error: any) {
+          this.error = error.message || 'Failed to add properties'
+        } finally {
+          this.loading = false
+        }
         this.properties.unshift(property)                                    
       },                                                                     
       setProperties(properties: Property[]): void {                          

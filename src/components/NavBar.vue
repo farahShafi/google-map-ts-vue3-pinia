@@ -24,7 +24,7 @@
                                                                                                
             <!-- When logged out: show sign in button -->                                      
             <li v-else class="nav-item">                                                       
-              <button class="btn btn-outline-info" @click="signIn">Sign In</button>            
+              <button class="btn btn-outline-info" @click="signIn">Add Property</button>            
             </li>                                                                              
           </ul>                                                                                
         </div>                                                                                 
