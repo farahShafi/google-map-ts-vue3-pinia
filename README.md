@@ -37,6 +37,28 @@ src/
     └── index.ts            # TypeScript interfaces
 ```
 
+## Backend Setup
+
+This app requires a Node.js backend API running on port `4000`. The frontend uses the following endpoints:
+
+- `GET /locations` - Fetch all properties
+- `POST /locations` - Create a new property
+
+Clone and run the backend repo:
+
+```bash
+# Clone the backend repo
+git clone <https://github.com/farahShafi/map-service>
+
+# Install dependencies
+npm install
+
+# Start the server (must be running on port 4000)
+follow the readme of map-services to set up and run
+```
+
+The API base URL is configured in `src/services/api.ts` as `http://localhost:4000`. Update this if your backend runs on a different port.
+
 ## Installation
 
 ```bash
