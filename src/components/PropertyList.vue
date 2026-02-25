@@ -2,11 +2,15 @@
   <div class="container mt-4">
     <h2>Properties</h2>
 
-    <div v-if="store.properties.length === 0" class="alert alert-info mt-3">
+    <div v-if="store.error" class="alert alert-danger mt-3">
+      Could not load properties. Please make sure you have the <strong>map-services</strong> repo running in Docker and your database container is up.
+    </div>
+
+    <div v-else-if="store.properties.length === 0" class="alert alert-info mt-3">
       No properties available.
     </div>
 
-    <table v-else class="table table-striped mt-3">
+    <table v-else-if="store.properties.length > 0" class="table table-striped mt-3">
       <thead class="table-dark">
         <tr>
           <th>Name</th>
