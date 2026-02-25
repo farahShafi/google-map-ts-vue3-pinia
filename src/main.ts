@@ -8,10 +8,10 @@ import { createApp } from 'vue'
   import 'bootstrap/dist/css/bootstrap.css'                                  
   import './assets/css/custom.css'
 
-// Components                                                              
-  import MapView from './components/MapView.vue'                             
-  import NewProperty from './components/NewProperty.vue'                     
-  import LoginView from './components/LoginView.vue'
+// Components
+  import MapView from './components/MapView.vue'
+  import NewProperty from './components/NewProperty.vue'
+  import PropertyList from './components/PropertyList.vue'
 
 // Create router
 const router = createRouter({                                              
@@ -24,16 +24,16 @@ const router = createRouter({
     meta: { title: 'Properties' }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: LoginView,
-    meta: { title: 'Login' }
-  },
-  {
     path: '/new-property',
     name: 'NewProperty',
     component: NewProperty,
     meta: { title: 'Add Property' }
+  },
+  {
+    path: '/properties',
+    name: 'PropertyList',
+    component: PropertyList,
+    meta: { title: 'Property List' }
   }
 ] 
 })

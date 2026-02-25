@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">                                                                     
-  import { onMounted, ref } from 'vue'                                                                    
+  import { ref } from 'vue'                                                                    
   import { usePropertiesStore } from '@/stores/properties'                                     
   import { Property, MapPosition } from '@/types'                                              
                                                                                                
@@ -52,9 +52,6 @@
     pixelOffset: { width: 0, height: -35 }                                                     
   })                                                                                           
   
-  onMounted(() => {
-    propertiesStore.fetchProperties()
-  })
   // Methods                                                                                   
   const getPosition = (marker: Property): MapPosition => {                                     
     return {                                                                                   

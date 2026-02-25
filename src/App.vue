@@ -6,7 +6,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
+import { usePropertiesStore } from '@/stores/properties'
+
+const propertiesStore = usePropertiesStore()
+
+onMounted(() => {
+  propertiesStore.fetchProperties()
+})
 </script>
 
 <style>

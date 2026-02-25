@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { Property } from '@/types' 
-import { getLocations, createLocation } from '@/services/locations' 
+import { getLocations, createLocation, deleteLocation } from '@/services/locations' 
 
 export const usePropertiesStore = defineStore('properties', {                     
     state: () => ({                                                          
@@ -30,18 +30,37 @@ export const usePropertiesStore = defineStore('properties', {
       async addProperty(property: Property) {   
         this.loading = true
         this.error = null
+
         try {
           const newProperty = await createLocation(property)
-          this.properties.unshift(newProperty)
-        } catch(error: any) {
-          this.error = error.message || 'Failed to add properties'
+          this.properties.unshift(newProperty)   // Only insert once
+        } catch (error: any) {
+          this.error = error.message || 'Failed to add property'
         } finally {
           this.loading = false
         }
-        this.properties.unshift(property)                                    
       },                                                                     
-      setProperties(properties: Property[]): void {                          
-        this.properties = properties                                         
+      async deleteProperty(id: string | number) {
+        try {
+          this.loading = true
+
+          await deleteLocation(id);
+
+          // ✅ Remove from state after successful delete
+          this.properties = this.properties.filter(p => p.id !== id);
+
+        } catch (error: any) {
+          console.error(error);
+          alert(
+            error?.response?.data?.message ||
+            "Failed to delete property"
+          );
+        } finally {
+          this.loading = false
+        }
+      },
+      setProperties(properties: Property[]): void {
+        this.properties = properties
       }
     }                                                          
                                                                            
