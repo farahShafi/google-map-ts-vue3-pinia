@@ -2,7 +2,7 @@
   --nav-height: 70px;
 }
 .navbar {
-  height: var(--nav-height);
+  min-height: var(--nav-height);
 }
 .vue-map-container {
   height: calc(100vh - var(--nav-height));

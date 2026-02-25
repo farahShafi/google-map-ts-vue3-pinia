@@ -4,8 +4,9 @@ import { createApp } from 'vue'
   import VueGoogleMaps from '@fawmi/vue-google-maps'                         
   import App from './App.vue'
 
- // Styles                                                                  
-  import 'bootstrap/dist/css/bootstrap.css'                                  
+ // Styles
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap/dist/js/bootstrap.bundle.min.js'
   import './assets/css/custom.css'
 
 // Components
