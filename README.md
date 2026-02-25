@@ -1,6 +1,6 @@
 # Google Maps Property Listing App
 
-A Vue 3 + TypeScript property listing application with Google Maps integration for viewing and adding real estate properties.
+A Vue 3 + TypeScript property listing application with Google Maps integration for viewing, adding, and managing real estate properties.
 
 ## Tech Stack
 
@@ -16,48 +16,52 @@ A Vue 3 + TypeScript property listing application with Google Maps integration f
 - Interactive Google Map displaying all properties as markers
 - Info windows showing property details on hover/click
 - Add new properties with address autocomplete
-- User authentication state management
-- Geolocation support for map centering
+- Property list view with delete support
+- Properties fetched once on app load and shared across views
 
 ## Project Structure
 
 ```
 src/
-├── main.ts                 # App entry point - Vue 3 setup
-├── App.vue                 # Root component
+├── main.ts                 # App entry point, router setup
+├── App.vue                 # Root component - fetches properties on load
 ├── components/
-│   ├── NavBar.vue          # Navigation with auth controls
-│   ├── MapView.vue         # Main map displaying all properties
+│   ├── NavBar.vue          # Navigation (Map / View List / Add Property)
+│   ├── MapView.vue         # Map view displaying all property markers
 │   ├── NewProperty.vue     # Property submission form
-│   └── LoginView.vue       # Login placeholder
-├── stores/                 # Pinia stores
-│   ├── loggedIn.ts         # Authentication state
-│   └── properties.ts       # Property data management
+│   └── PropertyList.vue    # Table view with delete per property
+├── stores/
+│   └── properties.ts       # Pinia store - properties state, fetch, add, delete
+├── services/
+│   ├── api.ts              # Axios instance (base URL: http://localhost:4000)
+│   └── locations.ts        # API calls: getLocations, createLocation, deleteLocation
 └── types/
     └── index.ts            # TypeScript interfaces
 ```
 
 ## Backend Setup
 
-This app requires a Node.js backend API running on port `4000`. The frontend uses the following endpoints:
+This app requires the **map-services** backend running via Docker on port `4000`.
 
-- `GET /locations` - Fetch all properties
-- `POST /locations` - Create a new property
-
-Clone and run the backend repo:
+> If the API is unreachable the Property List view will show an error prompting you to check your Docker setup.
+> Last item cannot be deleted in backend
 
 ```bash
-# Clone the backend repo
 git clone <https://github.com/farahShafi/map-service>
-
-# Install dependencies
-npm install
-
-# Start the server (must be running on port 4000)
-follow the readme of map-services to set up and run
 ```
 
-The API base URL is configured in `src/services/api.ts` as `http://localhost:4000`. Update this if your backend runs on a different port.
+Follow the `map-services` README to:
+1. Build and run the Docker container
+2. Start the database container
+3. Confirm the API is available at `http://localhost:4000`
+
+### API Endpoints Used
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/locations` | Fetch all properties |
+| POST | `/locations` | Create a new property |
+| DELETE | `/locations/:id` | Delete a property |
 
 ## Installation
 
@@ -72,6 +76,18 @@ npm run serve
 npm run build
 ```
 
+## Routes
+
+| Path | Name | Description |
+|------|------|-------------|
+| `/` | Map | Google Map with property markers |
+| `/properties` | PropertyList | Table of all properties with delete |
+| `/new-property` | NewProperty | Form to add a new property |
+
+## Environment
+
+Requires a Google Maps API key with the Places library enabled. The key is configured in `main.ts`.
+
 ## Migration Notes
 
 This project was migrated from Vue 2 + Vuex to Vue 3 + Pinia:
@@ -84,52 +100,6 @@ This project was migrated from Vue 2 + Vuex to Vue 3 + Pinia:
 | vue2-google-maps | @fawmi/vue-google-maps |
 | Bootstrap-Vue | Bootstrap 5 (plain CSS) |
 | vue-router 3 | vue-router 4 |
-
-### Key Changes
-
-**App Initialization:**
-```typescript
-// Vue 2
-new Vue({ store, router, render: h => h(App) }).$mount('#app')
-
-// Vue 3
-const app = createApp(App)
-app.use(pinia)
-app.use(router)
-app.mount('#app')
-```
-
-**State Management:**
-```typescript
-// Vuex
-mapGetters('moduleName', ['getter'])
-commit('MUTATION', payload)
-
-// Pinia
-const store = useStore()
-store.property = value  // Direct mutation
-```
-
-**Component Structure:**
-```vue
-<!-- Vue 2 Options API -->
-<script lang="ts">
-export default Vue.extend({
-  data() { return { count: 0 } },
-  methods: { increment() { this.count++ } }
-})
-</script>
-
-<!-- Vue 3 Composition API -->
-<script setup lang="ts">
-const count = ref(0)
-const increment = () => count.value++
-</script>
-```
-
-## Environment
-
-Requires a Google Maps API key with Places library enabled. The key is configured in `main.ts`.
 
 ## License
 
